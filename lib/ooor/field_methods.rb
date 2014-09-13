@@ -64,7 +64,12 @@ module Ooor
       def define_association_method(meth)
         define_attribute_method meth
         define_method meth do |*args|
-          get_association(meth, *args)
+          if @associations[meth].is_a? Array
+            @associations[meth][0]
+          else
+            r = get_association(meth, *args)
+            r.is_a?(Ooor::Base) ? r.id : r
+          end
         end
 
         define_method "#{meth}=" do |*args|
