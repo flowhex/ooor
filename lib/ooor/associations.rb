@@ -60,9 +60,10 @@ module Ooor
           id = @associations[method_name][0]
           display_name = @associations[method_name][1]
         end
-        rel = self.class.many2one_associations[method_name]['relation']
-        self.class.const_get(rel).new({id: id, _display_name: display_name}, [], true, false, true)
-#        self.class.const_get(rel).find(id, arguments.extract_options!)
+        # rel = self.class.many2one_associations[method_name]['relation']
+        # self.class.const_get(rel).new({id: id, _display_name: display_name}, [], true, false, true)
+        # self.class.const_get(rel).find(id, arguments.extract_options!)
+        id
       end
     end
 
@@ -71,7 +72,7 @@ module Ooor
       ids = @associations[method_name] || []
       options = arguments.extract_options!
       related_class = self.class.const_get(model_key)
-      CollectionProxy.new(related_class, {}).apply_finder_options(options.merge(ids: ids))      
+      CollectionProxy.new(related_class, {}).apply_finder_options(options.merge(ids: ids))
     end
 
   end
